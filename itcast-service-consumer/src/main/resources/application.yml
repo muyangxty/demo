@@ -1,0 +1,26 @@
+server:
+  port: 8081
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:10086/eureka
+    #是否拉取服务，默认为true
+    fetch-registry: true
+    #拉取服务列表的间隔时间，默认为30秒，当前值为开发环境测试时间
+    registry-fetch-interval-seconds: 5
+spring:
+  application:
+    #微服务的名称
+    name: service-consumer
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            # 设置hystrix的超时时间为6000ms
+            timeoutInMilliseconds: 6000
+feign:
+  hystrix:
+    # 开启Feign的熔断功能
+    enabled: true

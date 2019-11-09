@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+<body>
+<!--vue 对象的html模板-->
+<div id="app">
+    <input type="text" class="search">
+    <hr>
+    <div>{{birth1}}</div>
+
+    <hr>
+    <input type="text" v-model="store">
+    <input type="button" :class="{active: store > 0}" class="static xxxx yyyy aaa" value="加入购物车">
+
+    <input type="button" value="生成随机数" @click="random=Math.random()">{{random}}<br>
+    <span v-if="random > 0.75">你看到我了，说明大于0.75</span>
+    <span v-else-if="random > 0.5">你看到我了，说明大于0.5</span>
+    <span v-else-if="random > 0.25">你看到我了，说明大于0.25</span>
+    <span v-else>你看到我了，说明大于0</span><br>
+
+    <hr>
+
+    <input type="button" value="按钮" @click="show=!show"><br>
+    <span v-if="show">你看到我了，说明我是true, if</span><br>
+    <span v-show="show">你看到我了，说明我是true, show</span>
+    <hr>
+
+    <ul>
+        <li v-for="(val,key,index) in user" :key="index">{{index+1}}.{{key}}:{{val}}</li>
+    </ul>
+
+    <hr>
+
+    <ul>
+        <li v-for="(user,index) in users" :key="index">{{index+1}}.{{user.name}}-{{user.gender}}-{{user.age}}</li>
+    </ul>
+    <hr>
+
+    <input type="checkbox" value="ios" v-model="language">ios<br>
+    <input type="checkbox" value="java" v-model="language">java<br>
+    <input type="checkbox" value="php" v-model="language">php<br>
+    您选择了：{{language.join(",")}}
+    <hr>
+
+    <input type="text" v-model="num" @keyup.alt.67="submit">
+    <input type="button" value="点我呀" @contextMenu.prevent="incr">
+</div>
+<script>
+    //初始化一个vue实例
+    const app = new Vue({
+        //element，选择器
+        el:"#app",
+        //定义数据模型
+        data:{
+            name: "刘德华",
+            num: 100,
+            language:[],
+            users:[
+                {name:'柳岩', gender:'女', age: 21},
+                {name:'峰哥', gender:'男', age: 18},
+                {name:'范冰冰', gender:'女', age: 24},
+                {name:'刘亦菲', gender:'女', age: 18},
+                {name:'古力娜扎', gender:'女', age: 25}
+            ],
+            user:{name:'柳岩', gender:'女', age: 21},
+            show:true,
+            random:0,
+            store:0,
+            //毫秒值
+            birthday:1529032123201,
+            search:""
+
+        },
+        watch:{
+          search(newVal, oldVal){
+              //发送请求到后台接口
+              console.log(newVal,oldVal);
+          }
+        },
+        //定义方法
+        method:{
+            incr(){
+                this.num++;
+            },
+            sum(){
+              return this.num + 10000;
+            },
+            submit(){
+                console.log("您已经提交了");
+            },
+            birth(){
+                const date = new Date(this.birthday);
+                return date.getFullYear() + "年" + date.getMonth()+"月"+ date.getDay()+"日"
+            }
+        },
+        //计算属性，里面也能定义方法，但是这些方法必须有返回值，计算属性可以向数据模型一样使用
+        computed:{
+            birth1(){
+                const date = new Date(this.birthday);
+                return date.getFullYear() + "年" + date.getMonth()+"月"+ date.getDay()+"日"
+            }
+        },
+        created(){
+            this.num = 10000;
+        },
+    })
+</script>
+</body>
+</html>

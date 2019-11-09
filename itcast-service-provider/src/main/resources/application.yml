@@ -1,0 +1,24 @@
+server:
+  port: 8082
+spring:
+  datasource:
+    url: jdbc:mysql:///tedu_store?useUnicode=true&characeterEncoding=utf-8&serverTimezone=Asia/Shanghai
+    username: root
+    password: 529911
+  application:
+    #微服务的名称
+    name: service-provider
+mybatis:
+  type-aliases-package: cn.itcast.service.pojo
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:10086/eureka
+    #服务提供方启动时，会检测该参数是否为true, true-注册给eureka，默认为true
+    register-with-eureka: true
+
+  instance:
+    #心跳时间---默认值为30秒，当前值为开发环境测试时间
+    lease-renewal-interval-in-seconds: 5
+    #过期时间---默认值为90秒，当前值为开发环境测试时间
+    lease-expiration-duration-in-seconds: 15
